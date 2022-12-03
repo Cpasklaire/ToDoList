@@ -23,13 +23,13 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/login_check', name: 'login_check')]
-    public function loginCheck()
+    public function loginCheck(): Response
     {
         // This code is never executed.
     }
 
     #[Route('/logout', name: 'logout')]
-    public function logoutCheck()
+    public function logoutCheck(): Response
     {
         // This code is never executed.
     }
