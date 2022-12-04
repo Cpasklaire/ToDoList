@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Entity;
+/* namespace App\Tests\Entity;
 
 use App\Entity\Task;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -17,4 +17,4 @@ class TaskTest extends WebTestCase
         $this->assertEquals("Title", $task->getTitle());
         $this->assertEquals("Content", $task->getContent());
     }
-}
+} */
