@@ -29,6 +29,10 @@ class TaskController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $task->setCreatedAt(new \DateTimeImmutable)
+                ->setIsDone(false)
+                ->setAuthor($this->getUser());
+
             $em->persist($task);
             $em->flush();
 
@@ -43,6 +47,11 @@ class TaskController extends AbstractController
     #[Route('/tasks/{id}/edit', name: 'task_edit')]
     public function editAction(Task $task, Request $request, EntityManagerInterface $em)
     {
+        $author = $task->getAuthor();
+        $user = $this->getUser();
+        if ($user!==$author) {
+            return $this->redirectToRoute('task_list');
+        }
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
@@ -77,6 +86,13 @@ class TaskController extends AbstractController
     #[Route('/tasks/{id}/delete', name: 'task_delete')]
     public function deleteTaskAction(Task $task, EntityManagerInterface $em)
     {
+        $author = $task->getAuthor();
+        $user = $this->getUser();
+        $role = $user->getRoles();
+        if ($user!==$author | $author===1 && $role!=='ROLE_ADMIN') {
+            return $this->redirectToRoute('task_list');
+        }
+
         $em->remove($task);
         $em->flush();
 

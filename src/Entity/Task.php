@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\TaskRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TaskRepository;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task
@@ -14,8 +14,8 @@ class Task
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $createdAt = null;
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(length: 25)]
     private ?string $title = null;
@@ -26,11 +26,10 @@ class Task
     #[ORM\Column]
     private ?bool $isDone = null;
 
-    public function __construct()
-    {
-        $this->createdAt = new \Datetime();
-        $this->isDone = false;
-    }
+    #[ORM\ManyToOne(inversedBy: 'TaskRelation')]
+    private ?User $author = null;
+
+
 
     public function getId(): ?int
     {
@@ -81,6 +80,18 @@ class Task
     public function setIsDone(bool $isDone): self
     {
         $this->isDone = $isDone;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

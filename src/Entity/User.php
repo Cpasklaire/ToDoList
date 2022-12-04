@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use Datetime;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
@@ -31,6 +34,18 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
 
     #[ORM\Column]
     private array $roles = [];
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Task::class)]
+    private Collection $TaskRelation;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    public function __construct()
+    {
+        $this->TaskRelation = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -72,6 +87,13 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         return array_unique($roles);
     }
 
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
     /**
      * @see PasswordAuthenticatedUserInterface
      */
@@ -106,6 +128,48 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Task>
+     */
+    public function getTaskRelation(): Collection
+    {
+        return $this->TaskRelation;
+    }
+
+    public function addTaskRelation(Task $taskRelation): self
+    {
+        if (!$this->TaskRelation->contains($taskRelation)) {
+            $this->TaskRelation->add($taskRelation);
+            $taskRelation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTaskRelation(Task $taskRelation): self
+    {
+        if ($this->TaskRelation->removeElement($taskRelation)) {
+            // set the owning side to null (unless already changed)
+            if ($taskRelation->getUser() === $this) {
+                $taskRelation->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
     
 }
