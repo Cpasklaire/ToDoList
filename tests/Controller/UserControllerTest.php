@@ -26,16 +26,16 @@ class UserControllerTest extends WebTestCase
     }
     public function testCreateAction(): void
     {
-/*         $crawler = $this->client->request(Request::METHOD_GET, $this->urlGenerator->generate('user_create'));
+        $crawler = $this->client->request(Request::METHOD_GET, $this->urlGenerator->generate('user_create'));
         $form = $crawler->selectButton('Ajouter')->form();
-        $form['admin_user[username]'] = 'Admintest';
-        $form['admin_user[password][first]'] = 'motdepasse';
-        $form['admin_user[password][second]'] = 'motdepasse';
-        $form['admin_user[email]'] = 'admin@gmail.com';
-        $form['admin_user[roles]'] = array("0" => '["ROLE_ADMIN"]');
+        $form['user[username]'] = 'Admintest';
+        $form['user[password][first]'] = 'motdepasse';
+        $form['user[password][second]'] = 'motdepasse';
+        $form['user[email]'] = 'admin@gmail.com';
+        $form['user[Roles]'] = 'ROLE_ADMIN';
         $this->client->submit($form);
         $this->client->followRedirect();
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK); */
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
 
         $this->user = $this->userRepository->findOneByEmail('absinthe_lafeeverte@hotmail.fr');
         $this->urlGenerator = $this->client->getContainer()->get('router.default');
@@ -51,7 +51,7 @@ class UserControllerTest extends WebTestCase
         $this->client->followRedirect();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
-/*     public function testEditAction()
+    public function testEditAction()
     {
         $crawler = $this->client->request(Request::METHOD_GET, $this->urlGenerator->generate('user_edit', array('id' => 3)));
         $form = $crawler->selectButton('Modifier')->form();
@@ -63,5 +63,5 @@ class UserControllerTest extends WebTestCase
         $this->client->submit($form);
         $this->client->followRedirect();
         $this->assertSelectorTextContains('div.alert.alert-success', 'L\'utilisateur a bien été modifié');
-    }*/
+    }
 } 
