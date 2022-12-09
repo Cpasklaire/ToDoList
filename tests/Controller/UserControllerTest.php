@@ -61,7 +61,6 @@ class UserControllerTest extends WebTestCase
         $form['admin_users[email]'] = 'newalpha@gmail.com';
         $form['admin_users[roles]'] = array("0" => '["ROLE_ADMIN"]');
         $this->client->submit($form);
-        $this->client->followRedirect();
         $this->assertSelectorTextContains('div.alert.alert-success', 'L\'utilisateur a bien été modifié');
     }
 } 

@@ -74,7 +74,7 @@ class TaskControllerTest extends WebTestCase
         $task = $this->taskRepository->findOneByTitle('Edit test');
         $taskId = $task->getId();
         $crawler = $this->client->request(Request::METHOD_GET, $this->urlGenerator->generate('task_edit', array('id' => $taskId)));
-        $form = $crawler->selectButton('Editer')->form();
+        $form = $crawler->selectButton('Modifier')->form();
         $form['task[title]'] = 'Modifier cette tache test';
         $form['task[content]'] = 'Contenu de test';
         $this->client->submit($form);
@@ -89,6 +89,7 @@ class TaskControllerTest extends WebTestCase
         $this->client->submit($form);
         $this->client->followRedirect();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        
         $crawler = $this->client->request(Request::METHOD_GET, $this->urlGenerator->generate('task_list'));
         $form = $crawler->selectButton('Supprimer')->form();
         $this->client->submit($form);

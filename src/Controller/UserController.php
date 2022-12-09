@@ -29,6 +29,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $plaintextPassword = $user->getPassword();
             $hashedPassword = $passwordHasher->hashPassword($user,$plaintextPassword);
             $user->setPassword($hashedPassword);
@@ -37,10 +38,11 @@ class UserController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
-
+        
             return $this->redirectToRoute('user_list');
         }
 
+        
         return $this->render('user/create.html.twig', ['form' => $form->createView()]);
     }
 
