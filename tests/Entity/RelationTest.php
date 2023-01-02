@@ -3,14 +3,13 @@
 namespace Tests\App\Entity;
 
 use App\Entity\Task;
-use App\Entity\TaskTest;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-class UserTest extends WebTestCase
+class RelationTest extends WebTestCase
 {
-    public function testCreateUser()
+    public function testCreateRelation()
     {
         $password = "motdepasse";
         $dateImmutable = \DateTime::createFromFormat('Y-m-d H:i:s', strtotime('now'));
@@ -29,5 +28,18 @@ class UserTest extends WebTestCase
         $this->assertEquals("newuser", $user->getUsername());
         $this->assertEquals("motdepasse", $user->getPassword());
         $this->assertEquals($user->getUsername(), $user->getUserIdentifier());
+
+        $date = new \DateTimeImmutable;
+        $task = new Task();
+        $task->setTitle("Title");
+        $task->setContent("Content");
+        $task->setAuthor($user);
+        $task->setCreatedAt($date);
+
+        $this->assertEquals("Title", $task->getTitle());
+        $this->assertEquals("Content", $task->getContent());
+        $this->assertEquals($user, $task->getAuthor());
+        $this->assertEquals($date, $task->getCreatedAt());
+
     }
 }

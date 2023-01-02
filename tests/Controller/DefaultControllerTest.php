@@ -21,7 +21,6 @@ class DefaultControllerTest extends WebTestCase
     public function testIndexAction()
     {
         $this->client->request(Request::METHOD_GET, $this->urlGenerator->generate('homepage'));
-
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 } 
