@@ -33,10 +33,12 @@ security:
     access_control:
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/users, roles: ROLE_ADMIN }
-        - { path: ^/, roles: ROLE_USER }
+        - { path: ^/, roles: ROLE_USER}
 
 when@test:
     security:
+        role_hierarchy:
+            ROLE_ADMIN: ROLE_USER
         password_hashers:
             # By default, password hashers are resource intensive and take time. This is
             # important to generate secure password hashes. In tests however, secure hashes

@@ -31,36 +31,3 @@ php bin/console doctrine:migrations:migrate
 php bin/console doctrine:fixtures:load
 symfony server:start
 ```
-​
-# Pour les developpeurs
-Vou avez besoin de PHPUnit 9.5
-
-Créé une base de données test (par défaut : ToDoList_test).
-Insérer les fixtures.
-
-L'architecture du projet est en MVC.
-src
-    |_Controller
-    |_DataFixtures
-    |_Entity
-    |_Form
-    |_Repository
-
-templates
-    |_default
-    |_security
-    |_task
-    |_user
-
-Pour les tests, le dossiers /test est à la racine du projet. La couverture est dans public/test-coverage
-commande utile
-```bash
-vendor/bin/phpunit
-vendor/bin/phpunit --coverage-html public/test-coverage
-```
-
-# L'identification
-L'identification des users est géré par security-bundle de synfony. 
-https://symfony.com/doc/current/security.html
-La configuration se fait dans config/package/security.yaml à partire de src\Entity\User
-Le controlleur à modifier est rsc/Controller/SecurityController.php
