@@ -1,3 +1,5 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f8484e8d9d9c46a995760a5f33b997c3)](https://www.codacy.com/gh/Cpasklaire/ToDoList/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Cpasklaire/ToDoList&amp;utm_campaign=Badge_Grade)
+
 # ToDoList
  OpenClassRoom - Dev PHP - Projet 7 - Améliorez une application existante de ToDo & Co
 ​
@@ -56,3 +58,9 @@ commande utile
 vendor/bin/phpunit
 vendor/bin/phpunit --coverage-html public/test-coverage
 ```
+
+# L'identification
+L'identification des users est géré par security-bundle de synfony. 
+https://symfony.com/doc/current/security.html
+La configuration se fait dans config/package/security.yaml à partire de src\Entity\User
+Le controlleur à modifier est rsc/Controller/SecurityController.php
