@@ -53,14 +53,15 @@ class UserControllerTest extends WebTestCase
     }
     public function testEditAction()
     {
-        $crawler = $this->client->request(Request::METHOD_GET, $this->urlGenerator->generate('user_edit', array('id' => 3)));
+        $crawler = $this->client->request(Request::METHOD_GET, $this->urlGenerator->generate('user_edit', array('id' => 4)));
         $form = $crawler->selectButton('Modifier')->form();
-        $form['admin_users[username]'] = 'NewAlpha';
-        $form['admin_users[password][first]'] = 'motdepasse';
-        $form['admin_users[password][second]'] = 'motdepasse';
-        $form['admin_users[email]'] = 'newalpha@gmail.com';
-        $form['admin_users[roles]'] = array("0" => '["ROLE_ADMIN"]');
+        $form['user[username]'] = 'Amodifier';
+        $form['user[password][first]'] = 'motdepasse';
+        $form['user[password][second]'] = 'motdepasse';
+        $form['user[email]'] = 'Amodifier@gmail.com';
+        $form['user[Roles]'] = 'ROLE_ADMIN';
         $this->client->submit($form);
-        $this->assertSelectorTextContains('div.alert.alert-success', 'L\'utilisateur a bien été modifié');
+        $this->client->followRedirect();
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 } 

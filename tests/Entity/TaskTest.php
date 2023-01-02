@@ -17,12 +17,10 @@ class TaskTest extends WebTestCase
         $task = new Task();
         $task->setTitle("Title");
         $task->setContent("Content");
-        //$task->setUsers($user);
         $task->setCreatedAt($date);
 
         $this->assertEquals("Title", $task->getTitle());
         $this->assertEquals("Content", $task->getContent());
-        //$this->assertEquals($user, $task->getUser());
         $this->assertEquals($date, $task->getCreatedAt());
     }
 }

@@ -25,13 +25,13 @@ class AppFixtures extends Fixture
         $ano->setPassword($this->userPasswordHasher->hashPassword($ano, "motdepasse"));
         $manager->persist($ano);
 
-        $user = new User();
-        $user->setUsername("Administrateur");
-        $user->setEmail("absinthe_lafeeverte@hotmail.fr");
-        $user->setRoles(["ROLE_ADMIN"]);
-        $user->setPassword($this->userPasswordHasher->hashPassword($user, "motdepasse"));
-        $manager->persist($user);
-        $listUser[] = $user;
+        $admin = new User();
+        $admin->setUsername("Administrateur");
+        $admin->setEmail("absinthe_lafeeverte@hotmail.fr");
+        $admin->setRoles(["ROLE_ADMIN"]);
+        $admin->setPassword($this->userPasswordHasher->hashPassword($admin, "motdepasse"));
+        $manager->persist($admin);
+        $listUser[] = $admin;
 
         $user = new User();
         $user->setUsername("Utilisateur");
@@ -40,6 +40,14 @@ class AppFixtures extends Fixture
         $user->setPassword($this->userPasswordHasher->hashPassword($user, "motdepasse"));
         $manager->persist($user);
         $listUser[] = $user;
+
+        $modif = new User();
+        $modif->setUsername("Amodifier");
+        $modif->setEmail("Amodifier@gmail.com");
+        $modif->setRoles(["ROLE_USER"]);
+        $modif->setPassword($this->userPasswordHasher->hashPassword($modif, "motdepasse"));
+        $manager->persist($modif);
+        $listUser[] = $modif;
 
         $task = new Task();
         $task->setTitle("Tache anonyme");
