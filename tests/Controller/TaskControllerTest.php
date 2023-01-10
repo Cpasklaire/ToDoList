@@ -33,6 +33,19 @@ class TaskControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
+        public function testListFinishAction()
+    {
+        $this->client->request(Request::METHOD_GET, $this->urlGenerator->generate('task_list'));
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->user = $this->userRepository->findOneByEmail('absinthe_lafeeverte@hotmail.fr');
+        $this->urlGenerator = $this->client->getContainer()->get('router.default');
+        $this->client->loginUser($this->user);
+
+        $this->client->request(Request::METHOD_GET, $this->urlGenerator->generate('task_list'));
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+    }
+
     public function testCreateAction()
     {
         $crawler = $this->client->request(Request::METHOD_GET, $this->urlGenerator->generate('task_create'));

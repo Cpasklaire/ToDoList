@@ -20,7 +20,7 @@ class UserController extends AbstractController
         return $this->render('user/list.html.twig', ['users' => $user->findAll()]);
     }
 
-    #[Route('/users/create', name: 'user_create')]
+    #[Route('/user/create', name: 'user_create')]
     public function createAction(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher)
     {
         $user = new User();
@@ -33,6 +33,7 @@ class UserController extends AbstractController
             $plaintextPassword = $user->getPassword();
             $hashedPassword = $passwordHasher->hashPassword($user,$plaintextPassword);
             $user->setPassword($hashedPassword);
+            $user->setRoles(['ROLE_USER']);
 
             $em->persist($user);
             $em->flush();

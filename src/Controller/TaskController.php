@@ -18,6 +18,12 @@ class TaskController extends AbstractController
     {
         return $this->render('task/list.html.twig', ['tasks' => $task->findAll()]);
     }
+    
+    #[Route('/finishTasks', name: 'task_listFinish')]
+    public function listFinishAction(TaskRepository $task)
+    {
+        return $this->render('task/finishlist.html.twig', ['tasks' => $task->findAll()]);
+    }
 
     #[Route('/tasks/create', name: 'task_create')]
     public function createAction(Request $request, EntityManagerInterface $em)
@@ -40,7 +46,6 @@ class TaskController extends AbstractController
 
             return $this->redirectToRoute('task_list');
         }
-
         return $this->render('task/create.html.twig', ['form' => $form->createView()]);
     }
 
